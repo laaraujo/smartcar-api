@@ -1,0 +1,15 @@
+FROM node:21
+
+WORKDIR /app
+
+RUN corepack enable
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+COPY . .
+RUN pnpm install
+
+EXPOSE 3000
+
+CMD ["pnpm", "start"]
