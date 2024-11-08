@@ -1,3 +1,15 @@
+import { z } from "zod";
+
+export const EngineActionSchema = z.object({
+  action: z.enum(["START", "STOP"]),
+});
+
+export type ReqParams = {
+  id: string;
+};
+
+export type StartOrStopEngineReqBody = z.infer<typeof EngineActionSchema>;
+
 export type Vehicle = {
   vin: string;
   color: string;
@@ -12,4 +24,8 @@ export type Door = {
 
 export type FuelOrBattery = {
   percent: number;
+};
+
+export type EngineActionResult = {
+  status: "success" | "error";
 };

@@ -98,3 +98,19 @@ export const mockVehicleBattery: GMResponse<GMFuelOrBattery> = {
     },
   },
 };
+
+export const mockSuccessfulEngineAction: GMResponse = {
+  service: "actionEngine",
+  status: "200",
+  actionResult: {
+    status: "EXECUTED",
+  },
+};
+
+export const mockFailedEngineAction: GMResponse = {
+  service: "actionEngine",
+  status: "200",
+  actionResult: {
+    status: "FAILED",
+  },
+};

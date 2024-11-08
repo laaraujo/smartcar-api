@@ -5,6 +5,7 @@ import {
   GMResponse,
   GMVehicle,
   GMFuelOrBattery,
+  GMEngineActionResult,
 } from "./types";
 
 export const getVehicle = async (id: string): Promise<GMVehicle> => {
@@ -34,4 +35,14 @@ export const getVehicleFuelOrBattery = async (
     payload
   );
   return res.data.data!;
+};
+
+export const startOrStopVehicleEngine = async (
+  id: string,
+  action: "START" | "STOP"
+): Promise<GMEngineActionResult> => {
+  const command = action == "START" ? "START_VEHICLE" : "STOP_VEHICLE";
+  const payload = { id, command, responseType: "JSON" };
+  const res = await client.post<GMResponse>(`/actionEngineService`, payload);
+  return res.data.actionResult!;
 };

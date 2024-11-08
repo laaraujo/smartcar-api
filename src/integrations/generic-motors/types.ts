@@ -47,12 +47,10 @@ export type GMEngineActionResult = {
   status: "EXECUTED" | "FAILED";
 };
 
-export type GMResponse<
-  T = GMSecurity | GMVehicle | GMFuelOrBattery | GMEngineActionResult
-> = {
+export type GMResponse<T = GMSecurity | GMVehicle | GMFuelOrBattery> = {
   service?: string;
   status: string;
   data?: T;
-  actionResult?: string;
+  actionResult?: GMEngineActionResult;
   reason?: string;
 };

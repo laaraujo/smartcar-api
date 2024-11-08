@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ZodError } from "zod";
 
 export abstract class CustomError extends Error {
   abstract statusCode: number;
@@ -15,8 +16,13 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   const status = err.statusCode || 500;
+
+  let description = err.message;
+
+  if (err instanceof ZodError) description = JSON.parse(err.message);
+
   res.status(status).json({
     status,
-    description: err.message,
+    description,
   });
 };

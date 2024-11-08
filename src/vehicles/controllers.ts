@@ -1,10 +1,19 @@
 import { Request, NextFunction, Response } from "express";
 import * as gm from "../integrations/generic-motors/repository";
-import { Door, FuelOrBattery, Vehicle } from "./types";
+import {
+  Door,
+  FuelOrBattery,
+  Vehicle,
+  ReqParams,
+  StartOrStopEngineReqBody,
+  EngineActionSchema,
+  EngineActionResult,
+} from "./types";
 import { NonElectricVehicleError, NonFuelVehicleError } from "./errors";
+import { z } from "zod";
 
 export const getVehicle = async (
-  req: Request<{ id: string }>,
+  req: Request<ReqParams>,
   res: Response<Vehicle>,
   next: NextFunction
 ) => {
@@ -22,7 +31,7 @@ export const getVehicle = async (
 };
 
 export const getVehicleDoors = async (
-  req: Request<{ id: string }>,
+  req: Request<ReqParams>,
   res: Response<Door[]>,
   next: NextFunction
 ) => {
@@ -39,7 +48,7 @@ export const getVehicleDoors = async (
 };
 
 export const getVehicleFuel = async (
-  req: Request<{ id: string }>,
+  req: Request<ReqParams>,
   res: Response<FuelOrBattery>,
   next: NextFunction
 ) => {
@@ -53,7 +62,7 @@ export const getVehicleFuel = async (
 };
 
 export const getVehicleBattery = async (
-  req: Request<{ id: string }>,
+  req: Request<ReqParams>,
   res: Response<FuelOrBattery>,
   next: NextFunction
 ) => {
@@ -61,6 +70,29 @@ export const getVehicleBattery = async (
     const fuel = await gm.getVehicleFuelOrBattery(req.params.id);
     if (fuel.batteryLevel.type == "Null") throw new NonElectricVehicleError();
     res.send({ percent: parseFloat(fuel.batteryLevel.value) });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const startOrStopVehicleEngine = async (
+  req: Request<ReqParams, {}, StartOrStopEngineReqBody>,
+  res: Response<EngineActionResult>,
+  next: NextFunction
+) => {
+  try {
+    const validation = EngineActionSchema.safeParse(req.body);
+    if (!validation.success) {
+      throw validation.error;
+    }
+    const result = await gm.startOrStopVehicleEngine(
+      req.params.id,
+      req.body.action
+    );
+
+    res.send({
+      status: result.status == "EXECUTED" ? "success" : "error",
+    });
   } catch (err) {
     next(err);
   }
