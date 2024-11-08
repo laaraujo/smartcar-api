@@ -1,8 +1,11 @@
 import { errorHandler } from "./errors";
 import vehiclesRouter from "./vehicles/router";
 import express, { Request, Response } from "express";
+import morgan from "morgan";
 
 const app = express();
+
+app.use(morgan("tiny"));
 
 app.use(express.json());
 
