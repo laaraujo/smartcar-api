@@ -1,5 +1,5 @@
 import {
-  GMDoor,
+  GMFuelOrBattery,
   GMResponse,
   GMSecurity,
   GMVehicle,
@@ -65,6 +65,36 @@ export const mockVehicleSecurity: GMResponse<GMSecurity> = {
           },
         },
       ],
+    },
+  },
+};
+
+export const mockVehicleFuel: GMResponse<GMFuelOrBattery> = {
+  service: "getEnergy",
+  status: "200",
+  data: {
+    tankLevel: {
+      type: "Number",
+      value: "19.92",
+    },
+    batteryLevel: {
+      type: "Null",
+      value: "null",
+    },
+  },
+};
+
+export const mockVehicleBattery: GMResponse<GMFuelOrBattery> = {
+  service: "getEnergy",
+  status: "200",
+  data: {
+    tankLevel: {
+      type: "Null",
+      value: "null",
+    },
+    batteryLevel: {
+      type: "Number",
+      value: "23.88",
     },
   },
 };

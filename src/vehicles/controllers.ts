@@ -1,6 +1,7 @@
 import { Request, NextFunction, Response } from "express";
 import * as gm from "../integrations/generic-motors/repository";
-import { Door, Vehicle } from "./types";
+import { Door, FuelOrBattery, Vehicle } from "./types";
+import { NonFuelVehicleError } from "./errors";
 
 export const getVehicle = async (
   req: Request<{ id: string }>,
@@ -32,6 +33,20 @@ export const getVehicleDoors = async (
       locked: door.locked.value == "True",
     }));
     res.send(doors);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getVehicleFuel = async (
+  req: Request<{ id: string }>,
+  res: Response<FuelOrBattery>,
+  next: NextFunction
+) => {
+  try {
+    const fuel = await gm.getVehicleFuelOrBattery(req.params.id);
+    if (fuel.tankLevel.type == "Null") throw new NonFuelVehicleError();
+    res.send({ percent: parseFloat(fuel.tankLevel.value) });
   } catch (err) {
     next(err);
   }

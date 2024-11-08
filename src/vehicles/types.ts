@@ -9,3 +9,7 @@ export type Door = {
   location: string;
   locked: boolean;
 };
+
+export type FuelOrBattery = {
+  percent: number;
+};
