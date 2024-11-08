@@ -1,4 +1,9 @@
-import { GMResponse, GMVehicle } from "integrations/generic-motors/types";
+import {
+  GMDoor,
+  GMResponse,
+  GMSecurity,
+  GMVehicle,
+} from "../src/integrations/generic-motors/types";
 
 export const mockVehicleInfo: GMResponse<GMVehicle> = {
   service: "getVehicleInfo",
@@ -30,4 +35,36 @@ export const mockVehicleInfo: GMResponse<GMVehicle> = {
 export const mockVehicleNotFound: GMResponse = {
   status: "404",
   reason: "Vehicle id: 1233 not found.",
+};
+
+export const mockVehicleSecurity: GMResponse<GMSecurity> = {
+  service: "getSecurityStatus",
+  status: "200",
+  data: {
+    doors: {
+      type: "Array",
+      values: [
+        {
+          location: {
+            type: "String",
+            value: "frontRight",
+          },
+          locked: {
+            type: "Boolean",
+            value: "True",
+          },
+        },
+        {
+          location: {
+            type: "String",
+            value: "frontLeft",
+          },
+          locked: {
+            type: "Boolean",
+            value: "False",
+          },
+        },
+      ],
+    },
+  },
 };

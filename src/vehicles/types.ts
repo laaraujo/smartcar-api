@@ -4,3 +4,8 @@ export type Vehicle = {
   doorCount: number;
   driveTrain: string;
 };
+
+export type Door = {
+  location: string;
+  locked: boolean;
+};

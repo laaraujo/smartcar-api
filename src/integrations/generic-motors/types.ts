@@ -23,7 +23,7 @@ export type GMDoor = {
   locked: GMBoolean;
 };
 
-export type GMDoors = {
+export type GMSecurity = {
   doors: {
     type: "Array";
     values: GMDoor[];
@@ -48,7 +48,7 @@ export type GMEngineActionResult = {
 };
 
 export type GMResponse<
-  T = GMDoors | GMVehicle | GMFuelOrBattery | GMEngineActionResult
+  T = GMSecurity | GMVehicle | GMFuelOrBattery | GMEngineActionResult
 > = {
   service?: string;
   status: string;
