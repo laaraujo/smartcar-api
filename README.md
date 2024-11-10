@@ -50,3 +50,7 @@ API Swagger docs are available in the [/docs](http://localhost:3000/docs) endpoi
 ```
 pnpm test
 ```
+
+## License
+
+[GPL-3](./LICENSE)
