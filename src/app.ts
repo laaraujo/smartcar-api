@@ -14,7 +14,7 @@ const swaggerOptions = {
       version: "1.0.0",
     },
   },
-  apis: ["./**/router.ts", "./**/schema.ts"],
+  apis: ["./**/router.{ts,js}", "./**/schema.{ts,js}"],
 };
 
 const app = express();
